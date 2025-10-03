@@ -1,0 +1,878 @@
+﻿<Window x:Class="Manage_Library.QuanLyThuVien"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Manage_Library"
+        mc:Ignorable="d"
+        Title="QuanLyThuVien" SizeToContent="Height" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Width" Value="100"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="WrapPanel">
+            <Setter Property="Margin" Value="0,5,0,5"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <TextBlock FontSize="30" FontWeight="DemiBold" Foreground="Blue" HorizontalAlignment="Center" Margin="0,0,0,20">Quản lý thư viện sách</TextBlock>
+            <TabControl SelectionChanged="TabControl_SelectionChanged">
+                <TabItem Header="Quản lý sách">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="3*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Tìm kiếm sách -->
+                            <Border Margin="5" BorderBrush="#4CAF50" BorderThickness="2" CornerRadius="10" Background="#fff">
+                                <StackPanel Margin="10">
+                                    <GroupBox Header="Tìm kiếm sách" Padding="10" Background="#f7f7f7">
+                                        <StackPanel>
+                                            <GroupBox Header="Tìm kiếm theo:" Background="#f7f7f7">
+                                                <ComboBox Name="fieldsCBBox" FontSize="16">
+                                                    <ComboBoxItem IsSelected="True">Thể loại</ComboBoxItem>
+                                                    <ComboBoxItem>Mã sách</ComboBoxItem>
+                                                    <ComboBoxItem>Tên sách</ComboBoxItem>
+                                                    <ComboBoxItem>Tên tác giả</ComboBoxItem>
+                                                </ComboBox>
+                                            </GroupBox>
+                                            <GroupBox Margin="0,15,0,0" Header="Nhập từ khóa tìm kiếm" Background="#f7f7f7">
+                                                <TextBox x:Name="keyword" FontSize="18" Margin="5" Padding="5" Width="Auto"/>
+                                            </GroupBox>
+                                            <Button x:Name="btTimKiem" Click="btTimKiem_Click">Tìm kiếm</Button>
+                                            <Button x:Name="bttrangchu" Click="bttrangchu_Click">Trang chủ</Button>
+                                        </StackPanel>
+                                    </GroupBox>
+                                </StackPanel>
+                            </Border>
+
+                            <!-- Thông tin chi tiết sách -->
+                            <Border Margin="5" Grid.Column="1" BorderBrush="#4CAF50" BorderThickness="2" CornerRadius="10" Background="#fff">
+                                <StackPanel Margin="10">
+                                    <TextBlock Margin="0,0,0,15" FontSize="15" FontWeight="Bold" Foreground="#333" HorizontalAlignment="Center" >Thông tin chi tiết sách</TextBlock>
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                                            <!-- Ảnh -->
+                                            <Border BorderBrush="Black" BorderThickness="2" CornerRadius="10" HorizontalAlignment="Center">
+                                                <Image x:Name="anhbiasach" Source="Image/anhBiaPlaceHolder.png" Width="200" Height="150" Stretch="Uniform"/>
+                                            </Border>
+
+                                            <!-- Mô tả ảnh -->
+                                            <TextBlock Text="Ảnh bìa" HorizontalAlignment="Center" FontSize="14" FontStyle="Italic" Foreground="Gray" Margin="0,5,0,0" />
+                                            <Button Content="Open Image" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,20" Click="Button_Click_11"/>
+                                            <Button HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,20">Chọn ảnh</Button>
+                                            <Button></Button>
+
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <WrapPanel Margin="0,10,0,0">
+                                                <Label>Mã sách:</Label>
+                                                <TextBox x:Name="bookId"/>
+                                            </WrapPanel>
+                                            <WrapPanel Margin="0,10,0,0">
+                                                <Label>Tên sách:</Label>
+                                                <TextBox x:Name="bookName"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Nhà xuất bản:</Label>
+                                                <TextBox x:Name="bookNhXB"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Thể loại:</Label>
+                                                <TextBox x:Name="bookTheLoai"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Tác giả:</Label>
+                                                <TextBox x:Name="bookTacGia"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Năm xuất bản:</Label>
+                                                <TextBox x:Name="bookNXB"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Ngôn ngữ:</Label>
+                                                <TextBox x:Name="bookLanguage"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Giá tiền:</Label>
+                                                <TextBox x:Name="bookPrice"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Số lượng còn lại:</Label>
+                                                <TextBox x:Name="bookAmounts"/>
+                                            </WrapPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+                                    <WrapPanel>
+                                        <Button HorizontalAlignment="Right" Width="70" Margin="0,15,15,0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" Click="Button_Click_1">Thêm</Button>
+                                        <Button HorizontalAlignment="Right" Width="70" Margin="0,15,15,0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" Click="Button_Click_2">Sửa</Button>
+                                        <Button HorizontalAlignment="Right" Width="70" Margin="0,15,15,0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" Click="Button_Click_4">Xóa</Button>
+                                        <Button HorizontalAlignment="Right" Width="70" Margin="0,15,15,0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" Click="Button_Click_3">Lưu</Button>
+                                        <Button HorizontalAlignment="Right" Width="70" Margin="0,15,15,0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" Click="Button_Click_6">Hủy</Button>
+
+                                    </WrapPanel>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                        <!-- Kết quả tìm kiếm -->
+                        <Border Margin="5" BorderBrush="#4CAF50" BorderThickness="2" CornerRadius="10">
+                            <StackPanel Height="200" Margin="5">
+                                <Label Name="txtheadertimkiem" Width="200" HorizontalAlignment="Left" Foreground="#4CAF50" FontWeight="Heavy" Margin="0,0,0,10">Danh sach</Label>
+                                <DataGrid x:Name="dgdsSach" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Mã sách" Binding="{Binding MaSach}" Width="Auto" MinWidth="100"/>
+                                        <DataGridTextColumn Header="Tên Sách" Binding="{Binding TenSach}" Width="Auto" MinWidth="150"/>
+                                        <DataGridTextColumn Header="Nhà xuất bản" Binding="{Binding NhaXuatBan}" Width="Auto" MinWidth="150"/>
+                                        <DataGridTextColumn Header="Tác giả" Binding="{Binding TacGia}" Width="Auto" MinWidth="150"/>
+                                        <DataGridTextColumn Header="Năm xuất bản" Binding="{Binding NamXuatBan}" Width="Auto" MinWidth="100"/>
+                                        <DataGridTextColumn Header="Ngôn ngữ" Binding="{Binding NgonNgu}" Width="Auto" MinWidth="100"/>
+                                        <DataGridTextColumn Header="Giá tiền" Binding="{Binding GiaTien}" Width="Auto" MinWidth="100"/>
+                                        <DataGridTextColumn Header="Số lượng còn lại" Binding="{Binding SoLuongConLai}" Width="Auto" MinWidth="120"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Quản lý bạn đọc" Loaded="Load_dsBanDoc" Height="20" VerticalAlignment="Top">
+                    <TabItem.Resources>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="Margin" Value="0,0,20,0"/>
+                        </Style>
+                        <Style TargetType="GroupBox">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="150"/>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="Width" Value="100"/>
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,0,10,0"/>
+                            <Setter Property="Margin" Value="15,0,15,0"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <StackPanel>
+                        <GroupBox Header="Tìm kiếm độc giả" Margin="30,0,30,0">
+                            <DockPanel>
+                                <GroupBox Header="Tìm kiếm theo:">
+                                    <WrapPanel>
+                                        <RadioButton x:Name="rdtkmadocgia" GroupName="searchDG" IsChecked="True">Mã độc giả</RadioButton>
+                                        <RadioButton x:Name="rdtktendocgia" GroupName="searchDG">Tên độc giả</RadioButton>
+                                    </WrapPanel>
+                                </GroupBox>
+                                <GroupBox Header="Nhập từ khóa tìm kiếm:">
+                                    <TextBox HorizontalAlignment="Center" Padding="0" Width="200" x:Name="searchBar"></TextBox>
+                                </GroupBox>
+                                <Button Width="80" Height="20" Click="bthTKNguoidung_Click">Tim kiếm</Button>
+                                <Button Width="80" Height="20" Click="Button_Click_5">HienThiDS</Button>
+                            </DockPanel>
+                        </GroupBox>
+                        <GroupBox Margin="60,0,60,10" Header="Thông tin độc giả:">
+                            <StackPanel>
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Left" Width="349">
+                                        <WrapPanel>
+                                            <Label>Mã độc giả:</Label>
+                                            <TextBox Name="userID"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Tên độc giả:</Label>
+                                            <TextBox Name="userName"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Ngày sinh:</Label>
+                                            <DatePicker Name="birthDate" Width="150"></DatePicker>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Tên tài khoản:</Label>
+                                            <TextBox x:Name="AccountName"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Mật khẩu</Label>
+                                            <TextBox x:Name="Password"></TextBox>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center" DockPanel.Dock="Right">
+                                        <WrapPanel>
+                                            <Label>Giới tính:</Label>
+                                            <TextBox Name="sex"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Địa chỉ:</Label>
+                                            <TextBox Name="address"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Số điện thoại:</Label>
+                                            <TextBox Name="phone"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Kiểu độc giả:</Label>
+                                            <ComboBox Name="dgType" Width="150">
+                                                <ComboBoxItem>Sinh viên</ComboBoxItem>
+                                                <ComboBoxItem>Nhi đồng</ComboBoxItem>
+                                                <ComboBoxItem>Giáo viên</ComboBoxItem>
+                                                <ComboBoxItem IsSelected="True">Con người</ComboBoxItem>
+
+                                            </ComboBox>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                                <WrapPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+                                    <Button x:Name="addDG" Click="addDG_Click">Thêm</Button>
+                                    <Button x:Name="editDG" Click="editDG_Click">Sửa</Button>
+                                    <Button x:Name="deleteDG" Click="deleteDG_Click">Xóa</Button>
+                                    <Button x:Name="saveDG" Click="saveDG_Click">Lưu</Button>
+                                    <Button x:Name="exitDG" Click="exitDG_Click">Hủy</Button>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Danh sách độc giả">
+                            <DataGrid x:Name="dgDG" Height="150" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã độc giả" Binding="{Binding MaDg}"/>
+                                    <DataGridTextColumn Header="Tên độc giả" Binding="{Binding TenNguoiDung}"/>
+                                    <DataGridTextColumn Header="Giới tính" Binding="{Binding GioiTinh}"/>
+                                    <DataGridTextColumn Header="Ngày sinh" Binding="{Binding NgaySinh, StringFormat=dd-MM-yyyy}"/>
+                                    <DataGridTextColumn Header="Số điện thoại" Binding="{Binding SoDienThoai}"/>
+                                    <DataGridTextColumn Header="Loại độc giả" Binding="{Binding VaiTro}"/>
+                                    <DataGridTextColumn Header="Tên tài khoản" Binding="{Binding Username}"/>
+                                    <DataGridTextColumn Header="Mật khẩu" Binding="{Binding Passw}"/>
+                                    <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Quản lý mượn Sách" Loaded="adQuanLyMuonSach">
+                    <TabItem.Resources>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="Margin" Value="0,0,20,0"/>
+                        </Style>
+                        <Style TargetType="GroupBox">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="130"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="Width" Value="95"/>
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,0,10,0"/>
+                            <Setter Property="Margin" Value="15,0,15,0"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <StackPanel>
+                        <GroupBox Header="Tìm kiếm:" Margin="30,0,30,0">
+                            <DockPanel>
+                                <GroupBox Header="Tìm kiếm theo:">
+                                    <WrapPanel>
+                                        <RadioButton x:Name="searchMaDGMuon" IsChecked="True">Mã độc giả</RadioButton>
+                                        <RadioButton x:Name="searchSachMuon">Mã sách</RadioButton>
+                                    </WrapPanel>
+                                </GroupBox>
+                                <GroupBox Header="Nhập từ khóa tìm kiếm:">
+                                    <TextBox Padding="0" Height="30" HorizontalContentAlignment="Center" Width="300" x:Name="searchBarMuon"></TextBox>
+                                </GroupBox>
+                                <StackPanel Orientation="Vertical">
+                                    <Button Width="100" Margin="0,10,0,10" Height="30" Click="Button_Click_8">Tim Kiem</Button>
+                                    <Button Width="100" Margin="0,10,0,10" Height="30" Click="Button_Click_7">Danh sach</Button>
+                                </StackPanel>
+                            </DockPanel>
+                        </GroupBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox Header="Thông tin sách">
+                                <StackPanel>
+                                    <WrapPanel>
+                                        <Label>Mã sách:</Label>
+                                        <TextBox x:Name="bookIdMuon"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>Tên sách:</Label>
+                                        <TextBox x:Name="bookNameMuon"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>Số lượng còn:</Label>
+                                        <TextBox x:Name="bookAmountMuon"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>Tên tác giả:</Label>
+                                        <TextBox x:Name="authorMuon"></TextBox>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Grid.Column="1" Header="Thông tin cho mượn sách">
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Left" Margin="0,0,25,0">
+                                        <WrapPanel>
+                                            <Label>Mã Phiếu:</Label>
+                                            <TextBox x:Name="ticketMuonId"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Mã độc giả:</Label>
+                                            <TextBox x:Name="docGiaMuonId"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Mã sách:</Label>
+                                            <TextBox x:Name="sachIdMuon"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Số lượng mượn:</Label>
+                                            <TextBox x:Name="soLuongMuon"></TextBox>
+                                        </WrapPanel>
+
+                                    </StackPanel>
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <WrapPanel>
+                                            <Label>Ngày mượn:</Label>
+                                            <DatePicker Name="ngayMuon" Width="130"/>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Ngày trả:</Label>
+                                            <DatePicker Name="ngayTra" Width="130"/>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Giá tiền sách:</Label>
+                                            <TextBox x:Name="bookPriceMuon"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Ghi chú:</Label>
+
+                                            <ComboBox x:Name="noteMuon">
+                                                <ComboBoxItem IsSelected="True">Chua xac nhan</ComboBoxItem>
+                                                <ComboBoxItem>Da xac nhan</ComboBoxItem>
+                                                <ComboBoxItem>ghichu</ComboBoxItem>
+                                            </ComboBox>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                            </GroupBox>
+                        </Grid>
+                        <WrapPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+                            <Button x:Name="newMuon" Click="newMuon_Click">Mượn mới</Button>
+                            <Button x:Name="choMuon" Click="choMuon_Click">Cho mượn</Button>
+                            <Button x:Name="giaHan" Click="giaHan_Click">Gia hạn</Button>
+                            <Button x:Name="saveMuon" Click="saveMuon_Click">Lưu</Button>
+                            <Button x:Name="exitMuon" Click="exitMuon_Click">Hủy</Button>
+                        </WrapPanel>
+                        <GroupBox Header="Danh sách mượn:" x:Name="grm">
+                            <DataGrid AutoGenerateColumns="False" SelectionChanged="dgMuon_SelectionChanged" x:Name="dgMuon" Height="150" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã phiếu" Binding="{Binding MaPhieu}"/>
+                                    <DataGridTextColumn Header="Mã độc giả" Binding="{Binding MaDg}"/>
+                                    <DataGridTextColumn Header="Mã sách" Binding="{Binding MaSach}"/>
+                                    <DataGridTextColumn Header="Ngày mượn" Binding="{Binding NgayMuon, StringFormat=dd-MM-yyy}"/>
+                                    <DataGridTextColumn Header="Ngày trả" Binding="{Binding NgayTra ,StringFormat=dd-MM-yyy}"/>
+                                    <DataGridTextColumn Header="Số lượng mượn" Binding="{Binding SoLuong}"/>
+                                    <DataGridTextColumn Header="Ghi chú" Binding="{Binding GhiChu}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Quản lý trả Sách" Loaded="htdstrasach">
+                    <TabItem.Resources>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="Margin" Value="0,0,20,0"/>
+                        </Style>
+                        <Style TargetType="GroupBox">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="130"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="Width" Value="90"/>
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,0,10,0"/>
+                            <Setter Property="Margin" Value="15,0,15,0"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <GroupBox Header="Tìm kiếm:" Margin="0">
+                                <StackPanel>
+                                    <GroupBox Header="Tìm kiếm theo:">
+                                        <WrapPanel>
+                                            <RadioButton x:Name="searchMaDGTra" IsChecked="True">Mã độc giả</RadioButton>
+                                            <RadioButton x:Name="searchSachTra">Mã sách</RadioButton>
+                                        </WrapPanel>
+                                    </GroupBox>
+                                    <GroupBox Header="Nhập từ khóa tìm kiếm:">
+                                        <TextBox Padding="0" Width="Auto" x:Name="searchBarTra"></TextBox>
+                                    </GroupBox>
+                                    <StackPanel>
+                                        <Button Margin="5" Click="Button_Click_10">Tim kiem</Button>
+                                        <Button Margin="5" Click="Button_Click_9">Hien thi</Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Thông tin cho trả sách" Grid.Column="1">
+                                <StackPanel>
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Left" Margin="0,0,25,0">
+                                            <WrapPanel>
+                                                <Label>Mã Phiếu:</Label>
+                                                <TextBox x:Name="ticketTraId"></TextBox>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Mã độc giả:</Label>
+                                                <TextBox x:Name="docGiaTraId"></TextBox>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Mã sách:</Label>
+                                                <TextBox x:Name="sachIdTra"></TextBox>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Số lượng mượn:</Label>
+                                                <TextBox x:Name="soLuongTra"></TextBox>
+                                            </WrapPanel>
+
+                                        </StackPanel>
+                                        <StackPanel DockPanel.Dock="Right">
+                                            <WrapPanel>
+                                                <Label>Ngày mượn:</Label>
+                                                <DatePicker Name="ngayMuonTabTra" Width="130"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Ngày trả:</Label>
+                                                <DatePicker Name="ngayTraTabTra" Width="130"/>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Giá tiền sách:</Label>
+                                                <TextBox x:Name="bookPriceTra"></TextBox>
+                                            </WrapPanel>
+                                            <WrapPanel>
+                                                <Label>Ghi chú:</Label>
+                                                <TextBox x:Name="noteTra"></TextBox>
+                                            </WrapPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+                                    <WrapPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+                                        <Button x:Name="traSach" Click="traSach_Click">Trả sách</Button>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </GroupBox>
+                        </Grid>
+
+                        <GroupBox Header="Danh sách mượn:">
+                            <DataGrid SelectionChanged="dgMuonTabTraSach_SelectionChanged" AutoGenerateColumns="False" x:Name="dgMuonTabTraSach" Height="150" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã phiếu" Binding="{Binding MaPhieu}"/>
+                                    <DataGridTextColumn Header="Mã độc giả" Binding="{Binding MaDg}"/>
+                                    <DataGridTextColumn Header="Mã sách" Binding="{Binding MaSach}"/>
+                                    <DataGridTextColumn Header="Ngày mượn" Binding="{Binding NgayMuon, StringFormat=dd-MM-yyyy}"/>
+                                    <DataGridTextColumn Header="Ngày trả" Binding="{Binding NgayTra, StringFormat=dd-MM-yyyy}"/>
+                                    <DataGridTextColumn Header="Số lượng mượn" Binding="{Binding SoLuong}"/>
+                                    <DataGridTextColumn Header="Ghi chu" Binding="{Binding GhiChu}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Báo cáo - thống kê" Loaded="hthongke">
+                    <TabItem.Resources>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="Margin" Value="0,0,20,0"/>
+                        </Style>
+                        <Style TargetType="GroupBox">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="130"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="Width" Value="90"/>
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,0,10,0"/>
+                            <Setter Property="Margin" Value="15,0,15,0"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <StackPanel>
+                        <GroupBox Header="Thống kê sách" HorizontalAlignment="Center">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Left" Margin="0,0,45,0">
+                                    <WrapPanel>
+                                        <Label>SL đầu sách:</Label>
+                                        <TextBox x:Name="slDauSach"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>SL cuốn sách:</Label>
+                                        <TextBox x:Name="slCuonSach"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>SL Mượn:</Label>
+                                        <TextBox x:Name="slMuon"></TextBox>
+                                    </WrapPanel>
+                                </StackPanel>
+                                <StackPanel DockPanel.Dock="Right">
+                                    <WrapPanel>
+                                        <Label>SL còn:</Label>
+                                        <TextBox Name="slCon" Width="130"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>Tổng giá trị:</Label>
+                                        <TextBox x:Name="tongGiaTri"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label>SL quá hạn:</Label>
+                                        <TextBox x:Name="slQuaHan"></TextBox>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </GroupBox>
+                        <GroupBox Header="Thống kê độc giả" HorizontalAlignment="Center">
+                            <DockPanel>
+                                <StackPanel DockPanel.Dock="Left" Margin="0,0,45,0">
+                                    <WrapPanel>
+                                        <Label>SL độc giả:</Label>
+                                        <TextBox x:Name="slDG"></TextBox>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label Width="150">SL độc giả đã mượn:</Label>
+                                        <TextBox x:Name="slDGDaMuon"></TextBox>
+                                    </WrapPanel>
+                                </StackPanel>
+                                <StackPanel DockPanel.Dock="Right">
+                                    <WrapPanel>
+                                        <Label>SL Độc giả quá hạn:</Label>
+                                        <TextBox Name="slDGQuaHan" Width="130"/>
+                                    </WrapPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </GroupBox>
+                        <StackPanel>
+                            <TextBlock FontSize="17" Foreground="Blue" HorizontalAlignment="Center">Danh sách quá hạn trả sách</TextBlock>
+                            <DataGrid AutoGenerateColumns="False" x:Name="dgQuaHanTraSach" Height="150" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã phiếu" Binding="{Binding MaPhieu}"/>
+                                    <DataGridTextColumn Header="Mã độc giả" Binding="{Binding MaDg}"/>
+                                    <DataGridTextColumn Header="Mã sách" Binding="{Binding MaSach}"/>
+                                    <DataGridTextColumn Header="Ngày mượn" Binding="{Binding NgayMuon}"/>
+                                    <DataGridTextColumn Header="Ngày trả" Binding="{Binding NgayTra}"/>
+                                    <DataGridTextColumn Header="Ghi chú" Binding="{Binding GhiChu}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </StackPanel>
+                    </StackPanel>
+                </TabItem>
+
+                <!--Quản lý thủ thư -->
+                <TabItem Header="Quản lý thủ thư" x:Name="tabcuaadmin" Loaded="tabcuaadmin_Loaded" HorizontalAlignment="Left" Width="95">
+                    <TabItem.Resources>
+                        <Style TargetType="RadioButton">
+                            <Setter Property="Margin" Value="0,0,20,0"/>
+                        </Style>
+                        <Style TargetType="GroupBox">
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Width" Value="150"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        </Style>
+                        <Style TargetType="Label">
+                            <Setter Property="Width" Value="100"/>
+                        </Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Padding" Value="10,0,10,0"/>
+                            <Setter Property="Margin" Value="15,0,15,0"/>
+                        </Style>
+                    </TabItem.Resources>
+                    <StackPanel>
+                        <GroupBox Header="Tìm kiểm thủ thư" Margin="30,0,30,0">
+                            <DockPanel>
+                                <GroupBox Header="Tìm kiếm theo:">
+                                    <WrapPanel>
+                                        <RadioButton x:Name="tktheomatt" GroupName="searchDG" IsChecked="True">Mã Thủ thư</RadioButton>
+                                        <RadioButton x:Name="tktheotentt" GroupName="searchDG">Tên độc thủ Thư</RadioButton>
+                                    </WrapPanel>
+                                </GroupBox>
+                                <GroupBox Header="Nhập tìm kiếm :">
+                                    <TextBox VerticalContentAlignment="Center" Padding="0" Width="200" x:Name="thuThuSearchBar"  Margin="10,0,0,0"></TextBox>
+                                </GroupBox>
+                                <StackPanel>
+                                    <Button Margin="0,0,0,5" Height="30" Width="80" x:Name="tkthuthu" Click="tkthuthu_Click">Tìm kiếm</Button>
+                                    <Button Margin="0,0,0,5" Height="30" Width="80" x:Name="htdsthuthu" Click="htdsthuthu_Click">Hiển thị</Button>
+                                </StackPanel>
+                            </DockPanel>
+                        </GroupBox>
+                        <GroupBox Margin="60,0,60,10" Header="Thông tin thủ thư:">
+                            <StackPanel>
+                                <DockPanel>
+                                    <StackPanel DockPanel.Dock="Left" Width="349">
+                                        <WrapPanel>
+                                            <Label>Mã thủ thư:</Label>
+                                            <TextBox Name="thuThuID"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Tên thủ thư:</Label>
+                                            <TextBox Name="thuThuName"></TextBox>
+                                        </WrapPanel>
+                                        
+                                        <WrapPanel>
+                                            <Label>Tên tài khoản:</Label>
+                                            <TextBox x:Name="ThuThuAccountName"></TextBox>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label>Mật khẩu</Label>
+                                            <TextBox x:Name="thuThuPassword"></TextBox>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                    <StackPanel DockPanel.Dock="Right">
+                                        <WrapPanel>
+                                            <Label Width="293">Ca bắt đầu:</Label>
+                                            <ComboBox Name="batDauGio" Width="60" Height="30" Margin="5,0,0,0">
+                                                <!-- Thêm các giá trị giờ từ 0 đến 23 -->
+                                                <ComboBoxItem Content="00"/>
+                                                <ComboBoxItem Content="01"/>
+                                                <ComboBoxItem Content="02"/>
+                                                <ComboBoxItem Content="03"/>
+                                                <ComboBoxItem Content="04"/>
+                                                <ComboBoxItem Content="05"/>
+                                                <ComboBoxItem Content="06"/>
+                                                <ComboBoxItem Content="07"/>
+                                                <ComboBoxItem Content="08"/>
+                                                <ComboBoxItem Content="09"/>
+                                                <ComboBoxItem Content="10"/>
+                                                <ComboBoxItem Content="11"/>
+                                                <ComboBoxItem Content="12"/>
+                                                <ComboBoxItem Content="13"/>
+                                                <ComboBoxItem Content="14"/>
+                                                <ComboBoxItem Content="15"/>
+                                                <ComboBoxItem Content="16"/>
+                                                <ComboBoxItem Content="17"/>
+                                                <ComboBoxItem Content="18"/>
+                                                <ComboBoxItem Content="19"/>
+                                                <ComboBoxItem Content="20"/>
+                                                <ComboBoxItem Content="21"/>
+                                                <ComboBoxItem Content="22"/>
+                                                <ComboBoxItem Content="23"/>
+                                            </ComboBox>
+                                            <Label Content="giờ" Width="35"/>
+                                            <ComboBox Name="batDauPhut" Width="60" Height="30" Margin="5,0,0,0">
+                                                <!-- Thêm các giá trị phút từ 0 đến 59 -->
+                                                <ComboBoxItem Content="00"/>
+                                                <ComboBoxItem Content="01"/>
+                                                <ComboBoxItem Content="02"/>
+                                                <ComboBoxItem Content="03"/>
+                                                <ComboBoxItem Content="04"/>
+                                                <ComboBoxItem Content="05"/>
+                                                <ComboBoxItem Content="06"/>
+                                                <ComboBoxItem Content="07"/>
+                                                <ComboBoxItem Content="08"/>
+                                                <ComboBoxItem Content="09"/>
+                                                <ComboBoxItem Content="10"/>
+                                                <ComboBoxItem Content="11"/>
+                                                <ComboBoxItem Content="12"/>
+                                                <ComboBoxItem Content="13"/>
+                                                <ComboBoxItem Content="14"/>
+                                                <ComboBoxItem Content="15"/>
+                                                <ComboBoxItem Content="16"/>
+                                                <ComboBoxItem Content="17"/>
+                                                <ComboBoxItem Content="18"/>
+                                                <ComboBoxItem Content="19"/>
+                                                <ComboBoxItem Content="20"/>
+                                                <ComboBoxItem Content="21"/>
+                                                <ComboBoxItem Content="22"/>
+                                                <ComboBoxItem Content="23"/>
+                                                <ComboBoxItem Content="24"/>
+                                                <ComboBoxItem Content="25"/>
+                                                <ComboBoxItem Content="26"/>
+                                                <ComboBoxItem Content="27"/>
+                                                <ComboBoxItem Content="28"/>
+                                                <ComboBoxItem Content="29"/>
+                                                <ComboBoxItem Content="30"/>
+                                                <ComboBoxItem Content="31"/>
+                                                <ComboBoxItem Content="32"/>
+                                                <ComboBoxItem Content="33"/>
+                                                <ComboBoxItem Content="34"/>
+                                                <ComboBoxItem Content="35"/>
+                                                <ComboBoxItem Content="36"/>
+                                                <ComboBoxItem Content="37"/>
+                                                <ComboBoxItem Content="38"/>
+                                                <ComboBoxItem Content="39"/>
+                                                <ComboBoxItem Content="40"/>
+                                                <ComboBoxItem Content="41"/>
+                                                <ComboBoxItem Content="42"/>
+                                                <ComboBoxItem Content="43"/>
+                                                <ComboBoxItem Content="44"/>
+                                                <ComboBoxItem Content="45"/>
+                                                <ComboBoxItem Content="46"/>
+                                                <ComboBoxItem Content="47"/>
+                                                <ComboBoxItem Content="48"/>
+                                                <ComboBoxItem Content="49"/>
+                                                <ComboBoxItem Content="50"/>
+                                                <ComboBoxItem Content="51"/>
+                                                <ComboBoxItem Content="52"/>
+                                                <ComboBoxItem Content="53"/>
+                                                <ComboBoxItem Content="54"/>
+                                                <ComboBoxItem Content="55"/>
+                                                <ComboBoxItem Content="56"/>
+                                                <ComboBoxItem Content="57"/>
+                                                <ComboBoxItem Content="58"/>
+                                                <ComboBoxItem Content="59"/>
+                                            </ComboBox>
+                                            <Label Content="phút" Width="33"/>
+                                        </WrapPanel>
+                                        <WrapPanel>
+                                            <Label Width="293">Ca kết thúc:</Label>
+                                            <ComboBox Name="ketThucGio" Width="60" Height="30" Margin="5,0,0,0">
+                                                <!-- Thêm các giá trị giờ từ 0 đến 23 -->
+                                                <ComboBoxItem Content="00"/>
+                                                <ComboBoxItem Content="01"/>
+                                                <ComboBoxItem Content="02"/>
+                                                <ComboBoxItem Content="03"/>
+                                                <ComboBoxItem Content="04"/>
+                                                <ComboBoxItem Content="05"/>
+                                                <ComboBoxItem Content="06"/>
+                                                <ComboBoxItem Content="07"/>
+                                                <ComboBoxItem Content="08"/>
+                                                <ComboBoxItem Content="09"/>
+                                                <ComboBoxItem Content="10"/>
+                                                <ComboBoxItem Content="11"/>
+                                                <ComboBoxItem Content="12"/>
+                                                <ComboBoxItem Content="13"/>
+                                                <ComboBoxItem Content="14"/>
+                                                <ComboBoxItem Content="15"/>
+                                                <ComboBoxItem Content="16"/>
+                                                <ComboBoxItem Content="17"/>
+                                                <ComboBoxItem Content="18"/>
+                                                <ComboBoxItem Content="19"/>
+                                                <ComboBoxItem Content="20"/>
+                                                <ComboBoxItem Content="21"/>
+                                                <ComboBoxItem Content="22"/>
+                                                <ComboBoxItem Content="23"/>
+                                            </ComboBox>
+                                            <Label Content="giờ" Width="35"/>
+                                            <ComboBox Name="ketThucPhut" Width="60" Height="30" Margin="5,0,0,0">
+                                                <!-- Thêm các giá trị phút từ 0 đến 59 -->
+                                                <ComboBoxItem Content="00"/>
+                                                <ComboBoxItem Content="01"/>
+                                                <ComboBoxItem Content="02"/>
+                                                <ComboBoxItem Content="03"/>
+                                                <ComboBoxItem Content="04"/>
+                                                <ComboBoxItem Content="05"/>
+                                                <ComboBoxItem Content="06"/>
+                                                <ComboBoxItem Content="07"/>
+                                                <ComboBoxItem Content="08"/>
+                                                <ComboBoxItem Content="09"/>
+                                                <ComboBoxItem Content="10"/>
+                                                <ComboBoxItem Content="11"/>
+                                                <ComboBoxItem Content="12"/>
+                                                <ComboBoxItem Content="13"/>
+                                                <ComboBoxItem Content="14"/>
+                                                <ComboBoxItem Content="15"/>
+                                                <ComboBoxItem Content="16"/>
+                                                <ComboBoxItem Content="17"/>
+                                                <ComboBoxItem Content="18"/>
+                                                <ComboBoxItem Content="19"/>
+                                                <ComboBoxItem Content="20"/>
+                                                <ComboBoxItem Content="21"/>
+                                                <ComboBoxItem Content="22"/>
+                                                <ComboBoxItem Content="23"/>
+                                                <ComboBoxItem Content="24"/>
+                                                <ComboBoxItem Content="25"/>
+                                                <ComboBoxItem Content="26"/>
+                                                <ComboBoxItem Content="27"/>
+                                                <ComboBoxItem Content="28"/>
+                                                <ComboBoxItem Content="29"/>
+                                                <ComboBoxItem Content="30"/>
+                                                <ComboBoxItem Content="31"/>
+                                                <ComboBoxItem Content="32"/>
+                                                <ComboBoxItem Content="33"/>
+                                                <ComboBoxItem Content="34"/>
+                                                <ComboBoxItem Content="35"/>
+                                                <ComboBoxItem Content="36"/>
+                                                <ComboBoxItem Content="37"/>
+                                                <ComboBoxItem Content="38"/>
+                                                <ComboBoxItem Content="39"/>
+                                                <ComboBoxItem Content="40"/>
+                                                <ComboBoxItem Content="41"/>
+                                                <ComboBoxItem Content="42"/>
+                                                <ComboBoxItem Content="43"/>
+                                                <ComboBoxItem Content="44"/>
+                                                <ComboBoxItem Content="45"/>
+                                                <ComboBoxItem Content="46"/>
+                                                <ComboBoxItem Content="47"/>
+                                                <ComboBoxItem Content="48"/>
+                                                <ComboBoxItem Content="49"/>
+                                                <ComboBoxItem Content="50"/>
+                                                <ComboBoxItem Content="51"/>
+                                                <ComboBoxItem Content="52"/>
+                                                <ComboBoxItem Content="53"/>
+                                                <ComboBoxItem Content="54"/>
+                                                <ComboBoxItem Content="55"/>
+                                                <ComboBoxItem Content="56"/>
+                                                <ComboBoxItem Content="57"/>
+                                                <ComboBoxItem Content="58"/>
+                                                <ComboBoxItem Content="59"/>
+                                            </ComboBox>
+                                            <Label Content="phút" Width="59"/>
+                                        </WrapPanel>
+                                    </StackPanel>
+                                </DockPanel>
+                                <WrapPanel HorizontalAlignment="Center" Margin="0,20,0,0">
+                                    <Button x:Name="thuThuAddBtn" Click="thuThuAddBtn_Click">Thêm</Button>
+                                    <Button x:Name="thuThuEditBtn" Click="thuThuEditBtn_Click">Sửa</Button>
+                                    <Button x:Name="thuThuXoaBtn" Click="thuThuXoaBtn_Click">Xóa</Button>
+                                    <Button x:Name="thuThuLuu" Click="thuThuLuu_Click">Lưu</Button>
+                                    <Button x:Name="thuThuHuy" Click="thuThuHuy_Click">Hủy</Button>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Danh sách thủ thư:">
+                            <DataGrid x:Name="dgDanhSachThuThu" Height="150" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã thủ thư" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="Tên thủ thư" Binding="{Binding TenNhanVien}"/>
+
+                                    <DataGridTextColumn Header="Tài khoản" Binding="{Binding TaiKhoan1}"/>
+                                    <DataGridTextColumn Header="Mật khẩu" Binding="{Binding MatKhau}"/>
+                                    <DataGridTextColumn Header="Ca bắt đầu" Binding="{Binding ThoiGianBatDau}"/>
+                                    <DataGridTextColumn Header="Ca kết thúc" Binding="{Binding ThoiGianKetThuc}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+
+                <TabItem Header="Đăng Xuất">
+                    <StackPanel>
+                        <Label x:Name="txttenthuthu" HorizontalAlignment="Left" Width="200">Ten dang nhap :</Label>
+                        <Label x:Name="txtpassthuthu" HorizontalAlignment="Left">Mat Khau :</Label>
+                        <Button HorizontalAlignment="Right" Width="100" Margin="0,15,30,0" Background="#4CAF50" Foreground="White" BorderBrush="#4CAF50" BorderThickness="1" Click="Button_Click">Dang xuat</Button>
+                    </StackPanel>
+                </TabItem>
+
+
+            </TabControl>
+        </StackPanel>
+    </Grid>
+</Window>
